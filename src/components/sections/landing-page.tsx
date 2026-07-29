@@ -26,16 +26,18 @@ import {
   Layers3,
   Menu,
   MousePointerClick,
-  Plus,
   ShieldCheck,
-  Sparkles,
-  Star,
   X,
 } from "lucide-react";
 import Image from "next/image";
+import Script from "next/script";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MagneticButton } from "@/components/ui/magnetic-button";
+import { FaqAccordion21st } from "@/components/ui/faq-accordion-21st";
+import { Marketplace21st } from "@/components/ui/marketplace-21st";
+import { Pricing21st } from "@/components/ui/pricing-21st";
+import { Testimonials21st } from "@/components/ui/testimonials-21st";
 import { cn } from "@/lib/cn";
 
 type Scene = {
@@ -113,6 +115,8 @@ const brandJourney = [
   "Entreprise memorable",
   "Entreprise leader",
 ];
+
+const CALENDLY_URL = "https://calendly.com/adasoftdesign/appel-strategique-de";
 
 const offerPlans: OfferPlan[] = [
   {
@@ -419,7 +423,7 @@ const scenes: Scene[] = [
     subtitle: "Le visiteur sent la qualite avant meme de lire votre offre.",
     stat: "+180%",
     statLabel: "de demandes qualifiees",
-    cue: "Prochaine scene: demonstration avant/apres en immersion.",
+    cue: "Prochaine scene: immersion visuelle avant/apres pour mesurer l'ecart.",
     bgFrom: "#eef5f3",
     bgTo: "#ddebe7",
     panel: "#fdfefd",
@@ -451,7 +455,7 @@ const scenes: Scene[] = [
     subtitle: "Le design devient une preuve de competence.",
     stat: "+300%",
     statLabel: "de visibilite percue",
-    cue: "Prochaine scene: acceleration narrative et transformation complete.",
+    cue: "Prochaine scene: on enchaine vers la transformation globale de la marque.",
     bgFrom: "#eff2f6",
     bgTo: "#e2e7ee",
     panel: "#ffffff",
@@ -663,7 +667,6 @@ export function LandingPage() {
   const [sceneIndex, setSceneIndex] = useState(0);
   const [burstSeed, setBurstSeed] = useState(1);
   const [expandedOffer, setExpandedOffer] = useState<string>("authority");
-  const [activeFaq, setActiveFaq] = useState<number | null>(0);
   const [selectedProject, setSelectedProject] = useState<PortfolioProject | null>(null);
   const [selectedProjectImageIndex, setSelectedProjectImageIndex] = useState(0);
   const [introPhase, setIntroPhase] = useState<"intro" | "warmup" | "ready">("intro");
@@ -1046,10 +1049,6 @@ export function LandingPage() {
     heroMouseY.set(0);
   };
 
-  const handleFaqToggle = (idx: number) => {
-    setActiveFaq((prev) => (prev === idx ? null : idx));
-  };
-
   const handleProjectImageStep = (direction: -1 | 1) => {
     if (!selectedProject) return;
     const total = selectedProject.gallery.length;
@@ -1199,16 +1198,12 @@ export function LandingPage() {
           </nav>
 
           <div className="hidden items-center gap-2 lg:flex">
-            <MagneticButton href="#contact" className="text-white">
+            <MagneticButton href={CALENDLY_URL} className="text-white">
               Reserver un appel
             </MagneticButton>
           </div>
 
-          <button
-            className="rounded-full border border-black/15 p-2 text-[#4e545d] lg:hidden"
-            aria-label="Ouvrir le menu"
-            onClick={() => setMenuOpen((prev) => !prev)}
-          >
+          <button className="rounded-full border border-black/15 p-2 text-[#4e545d] lg:hidden" aria-label="Ouvrir le menu" onClick={() => setMenuOpen((prev) => !prev)}>
             <Menu size={20} />
           </button>
         </div>
@@ -1227,7 +1222,7 @@ export function LandingPage() {
                     {item.label}
                   </a>
                 ))}
-                <MagneticButton href="#contact" className="mt-2 w-full text-white">
+                <MagneticButton href={CALENDLY_URL} className="mt-2 w-full text-white">
                   Reserver un appel
                 </MagneticButton>
               </div>
@@ -1244,30 +1239,56 @@ export function LandingPage() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.75, ease: [0.2, 1, 0.3, 1] }}
               style={{ y: heroCardY }}
-              className="rounded-[2rem] border border-black/10 bg-white/85 p-8 shadow-[0_28px_70px_rgba(0,0,0,0.12)] backdrop-blur-xl sm:p-10"
+              className="relative overflow-hidden rounded-[2.2rem] border border-black/10 bg-white/88 p-8 shadow-[0_28px_70px_rgba(0,0,0,0.12)] backdrop-blur-xl sm:p-10"
             >
-              <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald/35 bg-emerald/10 px-4 py-2 text-xs uppercase tracking-[0.14em] text-emerald">
-                <Sparkles size={14} /> 50+ entreprises accompagnees
-              </p>
-              <h1 className="font-display text-4xl leading-[1.01] text-[#121419] sm:text-6xl xl:text-7xl">
-                On rend votre <span className="insight-word">marque</span> <span className="tracking-[0.02em]">impossible a ignorer.</span>
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#f4ead4]/80 via-white/30 to-transparent" />
+              <h1 className="relative mt-5 font-display text-4xl leading-[0.97] text-[#121419] sm:text-6xl xl:text-7xl">
+                Votre <span className="insight-word">marque</span> cesse d&apos;etre vue.
+                <br />
+                Elle commence a <span className="tracking-[0.02em]">s&apos;imposer.</span>
               </h1>
-              <p className="mt-4 max-w-xl text-lg text-[#4f5560]">Entree immediate dans l&apos;univers premium. Compris en un regard.</p>
+              <p className="relative mt-5 max-w-2xl text-lg text-[#4f5560]">Vos prospects comprennent instantanement votre niveau, votre valeur et pourquoi vous etes le bon choix.</p>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <MagneticButton href="#contact" className="text-white">
+              <div className="relative mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <MagneticButton href={CALENDLY_URL} className="text-white">
                   Reserver un appel
                 </MagneticButton>
-                <a
-                  href="#experience"
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-6 py-3 text-sm font-medium text-[#171b22] transition-colors hover:bg-black/5"
+                <motion.a
+                  href={CALENDLY_URL}
+                  whileHover={{ y: -2, scale: 1.01 }}
+                  whileTap={{ scale: 0.985 }}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-black/20 bg-white/70 px-6 py-3 text-sm font-medium text-[#171b22] transition-colors hover:bg-black/5"
                 >
-                  Entrer dans l&apos;experience <ArrowRight size={16} />
-                </a>
+                  Reserver votre session <ArrowRight size={16} />
+                </motion.a>
               </div>
 
-              <div className="mt-8 rounded-2xl border border-black/10 bg-white p-5">
-                <p className="text-xs uppercase tracking-[0.16em] text-emerald">Pourquoi ca convertit mieux</p>
+              <div className="relative mt-8 grid gap-3 sm:grid-cols-3">
+                {[
+                  { value: "+300%", label: "visibilite percue" },
+                  { value: "+180%", label: "intention de contact" },
+                  { value: "95%", label: "satisfaction client" },
+                ].map((metric, idx) => (
+                  <motion.div
+                    key={metric.label}
+                    initial={{ opacity: 0, y: 14 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.6 }}
+                    transition={{ duration: 0.42, delay: idx * 0.06, ease: [0.2, 1, 0.3, 1] }}
+                    whileHover={{ y: -4, scale: 1.015 }}
+                    className="rounded-[1.4rem] border border-black/10 bg-[#fbf8f2] p-4 shadow-[0_10px_24px_rgba(0,0,0,0.04)]"
+                  >
+                    <p className="font-display text-3xl text-[#121419]">{metric.value}</p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.16em] text-[#6b7280]">{metric.label}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="relative mt-6 rounded-[1.8rem] border border-black/10 bg-white p-5">
+                <div className="flex items-center justify-between gap-4">
+                  <p className="text-xs uppercase tracking-[0.16em] text-emerald">Pourquoi ca convertit mieux</p>
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-[#7a818d]">Clarte immediate</p>
+                </div>
                 <div className="mt-4 grid gap-3">
                   {conversionHooks.map((item, idx) => (
                     <motion.article
@@ -1298,18 +1319,27 @@ export function LandingPage() {
             >
               <motion.div
                 style={prefersReducedMotion ? undefined : { rotateX: heroRotateX, rotateY: heroRotateY }}
-                className="col-span-2 relative overflow-hidden rounded-[1.6rem] border border-black/10 bg-[#14181f] p-6 text-white shadow-[0_30px_70px_rgba(0,0,0,0.28)]"
+                className="col-span-2 relative overflow-hidden rounded-[1.9rem] border border-black/10 bg-[#14181f] p-6 text-white shadow-[0_30px_70px_rgba(0,0,0,0.28)]"
               >
                 <motion.div
                   aria-hidden
                   className="pointer-events-none absolute inset-0"
                   style={prefersReducedMotion ? undefined : { background: heroGlow }}
                 />
+                <div className="relative z-[1] flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.22em] text-white/55">Scene 01</p>
+                    <p className="mt-2 font-display text-2xl text-white sm:text-3xl">Perception avant argument.</p>
+                  </div>
+                  <div className="rounded-full border border-white/15 bg-white/8 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-emerald">
+                    Premium Entry
+                  </div>
+                </div>
                 <motion.div
                   aria-hidden
                   animate={prefersReducedMotion ? undefined : { y: [0, -6, 0], scale: [1, 1.015, 1] }}
                   transition={prefersReducedMotion ? undefined : { duration: 4.2, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
-                  className="relative mx-auto h-56 w-56 [transform-style:preserve-3d] sm:h-64 sm:w-64"
+                  className="relative z-[1] mx-auto mt-6 h-56 w-56 [transform-style:preserve-3d] sm:h-64 sm:w-64"
                 >
                   <div className="absolute inset-0 rounded-2xl border border-white/20 bg-gradient-to-br from-white/10 via-transparent to-black/40 shadow-[inset_0_0_50px_rgba(255,255,255,0.08)]" />
                   <div className="absolute inset-3 overflow-hidden rounded-xl border border-emerald/35 bg-[#0f1117]">
@@ -1326,7 +1356,7 @@ export function LandingPage() {
                   <div className="absolute left-1/2 top-1/2 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-xl border border-emerald/40 bg-emerald/15 backdrop-blur-sm" />
                   <div className="absolute inset-x-8 -bottom-4 h-8 rounded-full bg-emerald/35 blur-2xl" />
                 </motion.div>
-                <div className="relative mt-5 grid grid-cols-[1.1fr_0.9fr] gap-3 text-xs uppercase tracking-[0.16em] text-white/70">
+                <div className="relative z-[1] mt-5 grid grid-cols-[1.1fr_0.9fr] gap-3 text-xs uppercase tracking-[0.16em] text-white/70">
                   <div className="relative overflow-hidden rounded-xl border border-white/15 bg-white/5 p-2">
                     <Image
                       src="/images/LOGO%20VOLT.webp"
@@ -1340,31 +1370,58 @@ export function LandingPage() {
                     </div>
                   </div>
                   <div className="grid gap-3">
-                    <p className="rounded-xl border border-white/15 bg-white/5 px-3 py-2">Perception</p>
-                    <p className="rounded-xl border border-white/15 bg-white/5 px-3 py-2">Confiance</p>
+                    <motion.p whileHover={{ x: 4 }} className="rounded-xl border border-white/15 bg-white/5 px-3 py-2">
+                      Perception
+                    </motion.p>
+                    <motion.p whileHover={{ x: 4 }} className="rounded-xl border border-white/15 bg-white/5 px-3 py-2">
+                      Confiance
+                    </motion.p>
                   </div>
+                </div>
+                <div className="relative z-[1] mt-4 grid gap-3 sm:grid-cols-2">
+                  <motion.div whileHover={{ y: -4 }} className="rounded-[1.2rem] border border-white/12 bg-white/6 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/45">Impact visuel</p>
+                    <p className="mt-2 font-display text-2xl text-white">Compris en 3 secondes.</p>
+                  </motion.div>
+                  <motion.div whileHover={{ y: -4 }} className="rounded-[1.2rem] border border-emerald/25 bg-emerald/10 p-4">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-emerald">CTA prioritaire</p>
+                    <p className="mt-2 text-sm text-white/82">Tout est aligne pour guider naturellement vers votre prochain appel.</p>
+                  </motion.div>
                 </div>
               </motion.div>
 
-              <Image
-                src="/images/LUNAR%20MOCKUP.webp"
-                alt="Mockup premium"
-                width={600}
-                height={420}
-                className="h-full rounded-2xl border border-black/10 object-cover object-[50%_42%]"
-                priority
-              />
-              <Image
-                src="/images/KAYA%20MOCKUP.webp"
-                alt="Mobile showcase"
-                width={600}
-                height={420}
-                className="h-full rounded-2xl border border-black/10 object-cover object-center"
-                priority
-              />
-              <div className="col-span-2 rounded-2xl border border-black/10 bg-white p-5">
-                <p className="text-sm uppercase tracking-[0.18em] text-[#606875]">Ce que vous obtenez</p>
-                <div className="mt-4 space-y-3">
+              <motion.div whileHover={{ y: -6, rotate: -0.4 }} className="relative overflow-hidden rounded-2xl border border-black/10 shadow-[0_18px_36px_rgba(0,0,0,0.1)]">
+                <Image
+                  src="/images/LUNAR%20MOCKUP.webp"
+                  alt="Mockup premium"
+                  width={600}
+                  height={420}
+                  className="h-full rounded-2xl object-cover object-[50%_42%] transition duration-700 hover:scale-[1.03]"
+                  priority
+                />
+                <div className="pointer-events-none absolute inset-x-4 top-4 inline-flex w-fit rounded-full border border-white/20 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white backdrop-blur">
+                  Brand page
+                </div>
+              </motion.div>
+              <motion.div whileHover={{ y: -6, rotate: 0.4 }} className="relative overflow-hidden rounded-2xl border border-black/10 shadow-[0_18px_36px_rgba(0,0,0,0.1)]">
+                <Image
+                  src="/images/KAYA%20MOCKUP.webp"
+                  alt="Mobile showcase"
+                  width={600}
+                  height={420}
+                  className="h-full rounded-2xl object-cover object-center transition duration-700 hover:scale-[1.03]"
+                  priority
+                />
+                <div className="pointer-events-none absolute inset-x-4 top-4 inline-flex w-fit rounded-full border border-white/20 bg-black/25 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-white backdrop-blur">
+                  Conversion layer
+                </div>
+              </motion.div>
+              <div className="col-span-2 rounded-[1.8rem] border border-black/10 bg-white p-5 shadow-[0_16px_42px_rgba(0,0,0,0.08)]">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.18em] text-[#606875]">Ce que vous obtenez</p>
+                  <p className="mt-2 max-w-xl text-[#4f5560]">Une offre claire, des benefices concrets et un prochain pas simple a prendre.</p>
+                </div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
                   {conversionOffer.map((item, idx) => (
                     <motion.div
                       key={item}
@@ -1381,7 +1438,12 @@ export function LandingPage() {
                     </motion.div>
                   ))}
                 </div>
-                <p className="mt-4 text-xs text-[#5d6470]">Places limitees chaque mois pour garder un niveau d&apos;execution premium.</p>
+                <div className="mt-4 flex flex-col gap-3 border-t border-black/10 pt-4 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="text-xs text-[#5d6470]">Places limitees chaque mois pour garder un niveau d&apos;execution premium.</p>
+                  <a href={CALENDLY_URL} className="text-sm uppercase tracking-[0.16em] text-emerald transition hover:opacity-75">
+                    Voir le prochain slot
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -1576,25 +1638,8 @@ export function LandingPage() {
             <Counter value={180} label="devis" />
             <Counter value={95} label="satisfaction" />
           </div>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {testimonials.map((item) => (
-              <article key={item.author} className="h-full rounded-2xl border border-black/10 bg-white p-7">
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-black/20 bg-[#f6f3ee] text-sm text-[#111317]">
-                    {item.role.replace("Client ", "C")}
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#5a616d]">{item.author}</p>
-                    <p className="flex gap-1 text-emerald">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={14} fill="currentColor" />
-                      ))}
-                    </p>
-                  </div>
-                </div>
-                <p className="font-display text-2xl leading-snug text-[#121419]">&ldquo;{item.quote}&rdquo;</p>
-              </article>
-            ))}
+          <div className="mt-8">
+            <Testimonials21st items={testimonials} />
           </div>
         </section>
 
@@ -1611,142 +1656,7 @@ export function LandingPage() {
             </p>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
-            {offerPlans.map((offer, idx) => {
-              const expanded = expandedOffer === offer.id;
-              const isAuthority = offer.id === "authority";
-              const tierLabel = idx === 0 ? "Niveau 1" : idx === 1 ? "Niveau 2" : "Niveau 3";
-              const trackLabel = idx === 0 ? "START" : idx === 1 ? "BUILD" : "DOMINATE";
-
-              return (
-                <motion.article
-                  key={offer.id}
-                  whileHover={{ y: -4 }}
-                  data-rank={idx}
-                  ref={(el) => {
-                    offerCardRefs.current[offer.id] = el;
-                  }}
-                  className={cn(
-                    "offer-card relative flex h-full flex-col overflow-hidden rounded-[2rem] border bg-white/90 p-6 backdrop-blur-xl sm:p-8",
-                    idx === 0 && "border-black/10 shadow-[0_18px_45px_rgba(0,0,0,0.1)]",
-                    idx === 1 && "border-black/15 shadow-[0_24px_62px_rgba(0,0,0,0.12)] lg:-translate-y-2",
-                    isAuthority && "border-emerald/35 ring-1 ring-emerald/25 shadow-[0_32px_85px_rgba(15,138,108,0.24)]",
-                  )}
-                >
-                  {isAuthority ? (
-                    <>
-                      <motion.div
-                        aria-hidden
-                        initial={{ opacity: 0.3, scale: 0.92 }}
-                        whileInView={{ opacity: [0.26, 0.48, 0.26], scale: [0.95, 1.07, 0.95] }}
-                        viewport={{ once: false, amount: 0.35 }}
-                        transition={{ duration: 3.4, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
-                        className="pointer-events-none absolute -left-16 top-1/2 h-56 w-56 -translate-y-1/2 rounded-full bg-gradient-to-r from-emerald/10 via-[#f2d399]/45 to-emerald/10 blur-3xl"
-                      />
-                      <motion.div
-                        aria-hidden
-                        initial={{ opacity: 0.15 }}
-                        whileInView={{ opacity: [0.15, 0.28, 0.15] }}
-                        viewport={{ once: false, amount: 0.35 }}
-                        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-                        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[#efce8b]/14 to-transparent"
-                      />
-                    </>
-                  ) : null}
-                  <div>
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className={cn("text-[10px] uppercase tracking-[0.22em]", isAuthority ? "text-emerald" : "text-[#6a7280]")}>{tierLabel}</p>
-                        <p className="mt-2 font-display text-3xl text-[#111317] sm:text-4xl">{offer.name}</p>
-                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[#8a6c3c]">{trackLabel}</p>
-                      </div>
-
-                      {idx === 1 ? (
-                        <span className="rounded-full border border-emerald/30 bg-emerald/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald">
-                          Recommande
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <div className="mt-4 rounded-2xl border border-black/10 bg-gradient-to-r from-[#f4f6f9] via-white to-[#eef3f1] px-5 py-4 shadow-[0_10px_26px_rgba(15,23,35,0.08)]">
-                      <p className="text-[10px] uppercase tracking-[0.2em] text-[#5b6370]">Investissement</p>
-                      <p className="mt-1 font-display text-4xl leading-none text-[#121419] sm:text-5xl">
-                        {offer.price}
-                      </p>
-                      <p className="mt-2 inline-flex rounded-full border border-emerald/20 bg-emerald/10 px-3 py-1 text-sm text-[#1f5b4c]">
-                        {offer.perceivedValue}
-                      </p>
-                    </div>
-
-                    <p className="mt-4 text-lg text-[#27303a]">{offer.soldResult}</p>
-                    {offer.delivery ? <p className="mt-2 text-sm text-[#5a626f]">{offer.delivery}</p> : null}
-                    {offer.revisions ? <p className="mt-1 text-sm text-[#5a626f]">{offer.revisions}</p> : null}
-                    {offer.marketNote ? <p className="mt-2 text-xs text-[#707887]">({offer.marketNote})</p> : null}
-
-                    <div className="mt-5 space-y-2">
-                      {offer.resultBullets.map((line) => (
-                        <p key={line} className="flex items-start gap-2 text-sm text-[#202733]">
-                          <Check size={15} className="mt-0.5 text-emerald" />
-                          <span>{line}</span>
-                        </p>
-                      ))}
-                    </div>
-
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      <button
-                        onClick={() => handleOfferToggle(offer.id)}
-                        className="rounded-full border border-black/20 px-5 py-2 text-sm text-[#171b22] transition hover:bg-black/5"
-                      >
-                        {expanded ? "Reduire" : "Explorer l'offre"}
-                      </button>
-                      <MagneticButton href="#contact" className="text-white">
-                        Demarrer
-                      </MagneticButton>
-                    </div>
-                  </div>
-
-                  <AnimatePresence initial={false}>
-                    {expanded ? (
-                      <motion.div
-                        key={`${offer.id}-expanded`}
-                        initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                        exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
-                        transition={{ duration: 0.45, ease: [0.2, 1, 0.3, 1] }}
-                        className="mt-6 rounded-2xl border border-black/10 bg-[#f8f5ee] p-4"
-                      >
-                        {offer.categories.map((group) => (
-                          <div key={group.title} className="mb-4 last:mb-0">
-                            <p className="text-xs uppercase tracking-[0.18em] text-emerald">{group.title}</p>
-                            <div className="mt-2 grid gap-1 text-sm text-[#222a34] lg:grid-cols-1">
-                              {group.items.map((item) => (
-                                <p key={item} className="flex items-start gap-2">
-                                  <span className="mt-[0.55rem] h-1.5 w-1.5 rounded-full bg-emerald/70" />
-                                  <span>{item}</span>
-                                </p>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-
-                        <div className="mt-4 rounded-xl border border-emerald/25 bg-white p-3">
-                          <p className="text-xs uppercase tracking-[0.18em] text-emerald">Bonus</p>
-                          <div className="mt-2 grid gap-1 text-sm text-[#222a34]">
-                            {offer.bonus.map((item) => (
-                              <p key={item} className="flex items-start gap-2">
-                                <Sparkles size={13} className="mt-0.5 text-emerald" />
-                                <span>{item}</span>
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-                </motion.article>
-              );
-            })}
-          </div>
+          <Pricing21st offers={offerPlans} expandedOffer={expandedOffer} onToggle={handleOfferToggle} offerCardRefs={offerCardRefs} />
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-12 lg:px-10">
@@ -1767,33 +1677,9 @@ export function LandingPage() {
           <div className="mb-8">
             <p className="text-xs uppercase tracking-[0.22em] text-emerald">Options additionnelles</p>
             <h3 className="mt-2 font-display text-4xl leading-[1.03] text-[#111317] sm:text-5xl">Marketplace premium</h3>
+            <p className="mt-3 max-w-2xl text-[#515965]">Chaque option devient un module editoriale de croissance, presente comme une extension de votre systeme de marque.</p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {addOns.map((item, idx) => (
-              <motion.article
-                key={item.name}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.48, delay: idx * 0.05, ease: [0.2, 1, 0.3, 1] }}
-                whileHover={{ y: -4, scale: 1.01 }}
-                className="group rounded-2xl border border-black/10 bg-white p-5 shadow-[0_14px_34px_rgba(0,0,0,0.08)]"
-              >
-                <div className="relative mb-4 h-40 overflow-hidden rounded-[1.2rem] border border-black/10 bg-[#0f1116]">
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 33vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                  />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/28 via-transparent to-transparent" />
-                </div>
-                <p className="font-display text-2xl text-[#111317]">{item.name}</p>
-                <p className="mt-2 text-[#515965]">{item.price}</p>
-              </motion.article>
-            ))}
-          </div>
+          <Marketplace21st items={addOns} />
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
@@ -1854,11 +1740,11 @@ export function LandingPage() {
                 Construisons une marque dont les gens se souviennent.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <MagneticButton href="#contact" className="text-white">
+                <MagneticButton href={CALENDLY_URL} className="text-white">
                   Planifier un appel strategique
                 </MagneticButton>
-                <a href="#experience" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm text-white/95 transition hover:bg-white/10">
-                  Decouvrir notre methode <ArrowRight size={15} />
+                <a href={CALENDLY_URL} className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm text-white/95 transition hover:bg-white/10">
+                  Demarrer maintenant <ArrowRight size={15} />
                 </a>
               </div>
             </div>
@@ -1876,72 +1762,32 @@ export function LandingPage() {
               </h2>
               <p className="mx-auto mt-4 max-w-3xl text-[#4f5560]">Si vous voulez etre percu comme le meilleur choix, on commence maintenant.</p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <MagneticButton href="#" className="text-white">
+                <MagneticButton href={CALENDLY_URL} className="text-white">
                   Reserver mon appel strategique
                 </MagneticButton>
-                <a href="#experience" className="inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-6 py-3 text-sm text-[#111317] hover:bg-black/5">
-                  Revoir l&apos;experience <MousePointerClick size={15} />
+                <a href={CALENDLY_URL} className="inline-flex items-center justify-center gap-2 rounded-full border border-black/20 px-6 py-3 text-sm text-[#111317] hover:bg-black/5">
+                  Ouvrir Calendly <MousePointerClick size={15} />
                 </a>
+              </div>
+              <div className="mt-10 overflow-hidden rounded-[1.8rem] border border-black/10 bg-white">
+                <div
+                  className="calendly-inline-widget"
+                  data-url={CALENDLY_URL}
+                  style={{ minWidth: "320px", height: "700px" }}
+                />
               </div>
             </div>
           </section>
         </section>
+
+        <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="afterInteractive" />
 
         <section id="faq" className="mx-auto max-w-5xl px-6 py-20 lg:px-10">
           <div className="mx-auto mb-12 max-w-4xl text-center">
             <p className="mb-4 text-sm uppercase tracking-[0.22em] text-emerald">FAQ</p>
             <h2 className="font-display text-3xl font-medium leading-[1.04] text-[#111317] sm:text-4xl lg:text-5xl">Questions rapides, reponses nettes.</h2>
           </div>
-          <div className="space-y-4">
-            {faqs.map((faq, idx) => {
-              const isOpen = activeFaq === idx;
-              return (
-                <motion.article
-                  key={faq.q}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 0.42, delay: idx * 0.04, ease: [0.2, 1, 0.3, 1] }}
-                  className={cn(
-                    "rounded-2xl border bg-white p-2 text-[#111317] transition",
-                    isOpen ? "border-emerald/35 shadow-[0_14px_34px_rgba(15,138,108,0.14)]" : "border-black/10",
-                  )}
-                >
-                  <button
-                    type="button"
-                    onClick={() => handleFaqToggle(idx)}
-                    aria-expanded={isOpen}
-                    className="flex w-full items-center justify-between gap-4 rounded-xl px-4 py-4 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald"
-                  >
-                    <span className="font-display text-xl">{faq.q}</span>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.3, ease: [0.2, 1, 0.3, 1] }}
-                      className={cn(
-                        "inline-flex h-8 w-8 items-center justify-center rounded-full border",
-                        isOpen ? "border-emerald/35 bg-emerald/10 text-emerald" : "border-black/15 text-[#4d535d]",
-                      )}
-                    >
-                      <Plus size={15} />
-                    </motion.span>
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {isOpen ? (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.35, ease: [0.2, 1, 0.3, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="px-4 pb-4 text-[#4d535d]">{faq.a}</p>
-                      </motion.div>
-                    ) : null}
-                  </AnimatePresence>
-                </motion.article>
-              );
-            })}
-          </div>
+          <FaqAccordion21st items={faqs} />
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
@@ -1979,25 +1825,8 @@ export function LandingPage() {
             <Counter value={180} label="devis" />
             <Counter value={95} label="satisfaction" />
           </div>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {testimonials.map((item) => (
-              <article key={item.author} className="h-full rounded-2xl border border-black/10 bg-white p-7">
-                <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full border border-black/20 bg-[#f6f3ee] text-sm text-[#111317]">
-                    {item.role.replace("Client ", "C")}
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#5a616d]">{item.author}</p>
-                    <p className="flex gap-1 text-emerald">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={14} fill="currentColor" />
-                      ))}
-                    </p>
-                  </div>
-                </div>
-                <p className="font-display text-2xl leading-snug text-[#121419]">&ldquo;{item.quote}&rdquo;</p>
-              </article>
-            ))}
+          <div className="mt-8">
+            <Testimonials21st items={testimonials} />
           </div>
         </section>
       </main>
@@ -2099,7 +1928,7 @@ export function LandingPage() {
                     </p>
                   </div>
                   <div className="mt-8">
-                    <MagneticButton href="#contact" className="w-full text-white">
+                    <MagneticButton href={CALENDLY_URL} className="w-full text-white">
                       Demarrer ce niveau
                     </MagneticButton>
                   </div>

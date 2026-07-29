@@ -10,7 +10,7 @@ type MagneticButtonProps = {
   href?: string;
 };
 
-export function MagneticButton({ children, className, href = "#contact" }: MagneticButtonProps) {
+export function MagneticButton({ children, className, href = "https://calendly.com/adasoftdesign/appel-strategique-de" }: MagneticButtonProps) {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLAnchorElement | null>(null);
   const x = useMotionValue(0);

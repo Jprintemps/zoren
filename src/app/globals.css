@@ -24,10 +24,10 @@ body {
   margin: 0;
   font-family: var(--font-body), sans-serif;
   background:
-    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.06), transparent 35%),
-    radial-gradient(circle at 90% 0%, rgba(15, 138, 108, 0.11), transparent 35%),
-    linear-gradient(160deg, #090909 0%, #111111 48%, #171717 100%);
-  color: var(--bone);
+    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.72), transparent 35%),
+    radial-gradient(circle at 90% 0%, rgba(15, 138, 108, 0.1), transparent 35%),
+    linear-gradient(160deg, #f3efe8 0%, #f7f4ee 52%, #efe8dc 100%);
+  color: #111317;
   letter-spacing: 0.01em;
 }
 
