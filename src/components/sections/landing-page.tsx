@@ -59,6 +59,7 @@ type Scene = {
 
 const navItems = [
   { href: "#experience", label: "Experience" },
+  { href: "#offers", label: "Offres" },
   { href: "#contact", label: "Contact" },
   { href: "#faq", label: "FAQ" },
 ];
@@ -685,7 +686,6 @@ export function LandingPage() {
   const previousHtmlOverscrollRef = useRef<string>("");
   const lenisRef = useRef<Lenis | null>(null);
   const offersSectionRef = useRef<HTMLElement | null>(null);
-  const proofsSectionRef = useRef<HTMLElement | null>(null);
   const offerCardRefs = useRef<Record<string, HTMLElement | null>>({});
 
   const experienceRef = useRef<HTMLElement | null>(null);
@@ -1056,10 +1056,6 @@ export function LandingPage() {
   };
 
   const handleProjectOpen = (project: PortfolioProject) => {
-    proofsSectionRef.current?.scrollIntoView({
-      behavior: prefersReducedMotion ? "auto" : "smooth",
-      block: "start",
-    });
     setSelectedProjectImageIndex(0);
     setSelectedProject(project);
   };
@@ -1618,7 +1614,7 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section ref={proofsSectionRef} className="mx-auto max-w-7xl px-6 pb-24 lg:px-10">
+        <section className="mx-auto max-w-7xl px-6 pb-24 lg:px-10">
           <div className="mb-10 max-w-3xl">
             <p className="text-xs uppercase tracking-[0.22em] text-emerald">Preuves</p>
             <h3 className="mt-2 font-display text-4xl leading-[1.04] text-[#111317] sm:text-5xl">Des signaux qui rassurent avant le premier appel.</h3>
@@ -1643,7 +1639,7 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section ref={offersSectionRef} className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10">
+        <section id="offers" ref={offersSectionRef} className="relative mx-auto max-w-7xl px-6 py-20 lg:px-10">
           <div className="pointer-events-none absolute inset-x-10 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#c89d49]/50 to-transparent" />
           <div className="pointer-events-none absolute inset-x-0 top-24 h-52 bg-gradient-to-r from-[#f1dfb8]/22 via-[#f7f1e2]/36 to-[#d7af66]/22 blur-3xl" />
           <div className="offer-stage-title mb-10">
@@ -1805,30 +1801,6 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section ref={proofsSectionRef} className="mx-auto max-w-7xl px-6 pb-24 lg:px-10">
-          <div className="mb-10 max-w-3xl">
-            <p className="text-xs uppercase tracking-[0.22em] text-emerald">Preuves</p>
-            <h3 className="mt-2 font-display text-4xl leading-[1.04] text-[#111317] sm:text-5xl">Des signaux qui rassurent avant le premier appel.</h3>
-            <p className="mt-3 text-[#515965]">Resultats visibles, temoignages reels et promesse tenue: tout pointe vers la confiance.</p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {["Strategie avant design", "Execution rapide", "Conversion orientee business"].map((point) => (
-              <article key={point} className="rounded-2xl border border-black/10 bg-white p-6">
-                <p className="flex items-center gap-3 text-[#111317]">
-                  <Check size={18} className="text-emerald" /> {point}
-                </p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <Counter value={300} label="visibilite" />
-            <Counter value={180} label="devis" />
-            <Counter value={95} label="satisfaction" />
-          </div>
-          <div className="mt-8">
-            <Testimonials21st items={testimonials} />
-          </div>
-        </section>
       </main>
 
       <AnimatePresence>

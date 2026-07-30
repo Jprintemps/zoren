@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { EB_Garamond, Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
@@ -32,7 +32,19 @@ export const metadata: Metadata = {
       "Construisons une marque qui vous positionne comme la référence de votre secteur.",
     type: "website",
     locale: "fr_FR",
+    images: [{ url: "/og-cover.png", width: 1200, height: 630, alt: "ZOREN — Agence de Branding Premium" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "ZOREN | Agence de Branding Premium",
+    description:
+      "Construisons une marque qui vous positionne comme la référence de votre secteur.",
+    images: ["/og-cover.png"],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f8a6c",
 };
 
 export default function RootLayout({
